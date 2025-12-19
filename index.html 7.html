@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Daily Dinner</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* --- استيراد الخطوط (Quicksand للموقع و Poppins للمينيو الجديد) --- */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Quicksand:wght@300;400;500;600;700&display=swap');
+
+        /* --- أساسيات الصفحة --- */
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: "Quicksand", sans-serif;
+            color: #333;
+            line-height: 1.6;
+            background-color: #fff;
+        }
+
+        ul { list-style: none; }
+        a { text-decoration: none; }
+
+        .container {
+            max-width: 1200px; /* تم تعديل العرض ليناسب المينيو الجديد */
+            margin: auto;
+            padding: 0 20px;
+        }
+
+        /* --- الألوان والزراير العامة --- */
+        .primary-text-gold { color: #e4b95b; } /* للون الذهبي القديم */
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-weight: 700;
+            font-size: 14px;
+            text-transform: uppercase;
+        }
+
+        .btn-primary {
+            color: white;
+            border: 2px solid white;
+            background: transparent;
+        }
+        .btn-primary:hover {
+            background: #e4b95b;
+            border-color: #e4b95b;
+        }
+
+        .btn-dark {
+            background-color: #1a1a1a;
+            color: white;
+            margin-top: 20px;
+        }
+        .btn-dark:hover {
+            background-color: #e4b95b;
+            color: white;
+        }
+
+        /* --- Header Section --- */
+        header {
+            height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') center center/cover no-repeat;
+            background-color: #222;
+            position: relative;
+        }
+
+        #navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 80px;
+            padding-top: 10px;
+        }
+
+        #navbar .logo img {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            margin-left: 30px;
+            border: 2px solid #e4b95b;
+            background: #fff;
+            padding: 5px;
+        }
+
+        #navbar ul { display: flex; margin-right: 50px; }
+        #navbar ul li a {
+            padding: 10px 20px;
+            color: white;
+            font-weight: 600;
+        }
+        #navbar ul li a:hover { color: #e4b95b; }
+
+        header .content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 80%;
+            text-align: center;
+            color: white;
+        }
+        header .content h1 { font-size: 3.5rem; margin-bottom: 10px; }
+        header .content p { font-size: 1.2rem; margin-bottom: 30px; }
+
+        /* --- About Section --- */
+        #about {
+            padding: 5rem 0;
+            background-color: #fbfbfb;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        .section-header h2 {
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        .section-header p {
+            color: #999;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .about-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 50px;
+            margin-top: 20px;
+        }
+
+        .about-text { flex: 1; }
+        .about-text p {
+            color: #777;
+            margin-bottom: 15px;
+            line-height: 1.8;
+            font-size: 0.95rem;
+            text-align: justify;
+        }
+
+        .about-images {
+            flex: 1;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: repeat(2, 150px);
+            gap: 15px;
+        }
+        .about-images img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .about-images img:nth-child(1) { grid-row: span 2; height: 100%; }
+
+        /* =========================
+           Menu Section (الكود الجديد المضاف)
+        ========================= */
+
+        #menu {
+            background-color: #fffefe;
+            padding: 80px 0;
+            color: #efe7e7;
+            font-family: 'Poppins', sans-serif; /* الخط الجديد */
+        }
+
+        #menu .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        /* Title */
+        #menu .title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        #menu .title h2 {
+            font-size: 42px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+            color: #1a1a1a;
+        }
+
+        #menu .title p {
+            font-size: 16px;
+            color: #b5b5b5;
+        }
+
+        /* Menu Items Grid */
+        .menu-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        /* Menu Item Card */
+        .menu-item {
+            background: #8a7a7a;
+            border-radius: 16px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .menu-item:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
+        }
+
+        /* Image */
+        .menu-item img {
+            width: 90px;
+            height: 90px;
+            object-fit: cover;
+            border-radius: 12px;
+            flex-shrink: 0;
+        }
+
+        /* Text Content */
+        .menu-item h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #fff; /* تعديل بسيط لضمان ظهور النص */
+        }
+
+        .menu-item p {
+            font-size: 14px;
+            color: #cfcfcf;
+            line-height: 1.6;
+        }
+
+        /* Price */
+        .primary-text {
+            color: #f4b41a;
+            font-weight: 700;
+            font-size: 16px;
+            margin-left: 10px;
+        }
+
+        /* Responsive Menu */
+        @media (max-width: 768px) {
+            #menu .title h2 { font-size: 32px; }
+            .menu-item { padding: 16px; }
+            .menu-item img { width: 75px; height: 75px; }
+        }
+
+        @media (max-width: 480px) {
+            .menu-item { flex-direction: column; text-align: center; }
+            .menu-item h3 { flex-direction: column; gap: 6px; }
+        }
+
+        /* =========================
+           End Menu Section
+        ========================= */
+
+
+        /* --- Gallery Section --- */
+        #gallery {
+            background-color: #222;
+            padding: 5rem 0;
+            color: white;
+        }
+        #gallery h2 { color: white; text-align: center; margin-bottom: 40px; font-size: 2.5rem; }
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .gallery-grid img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 10px;
+            opacity: 0.8;
+            transition: 0.3s;
+        }
+        .gallery-grid img:hover { opacity: 1; transform: scale(1.03); }
+
+        /* --- Contact Section --- */
+        #contact { padding: 5rem 0; background: #fff; }
+        .contact-container { max-width: 800px; margin: auto; }
+        .contact-info { margin-bottom: 30px; }
+        .contact-info h3 { font-size: 1.1rem; margin-bottom: 5px; color: #333; }
+        .contact-info p { color: #666; font-size: 0.9rem; margin-bottom: 15px; }
+        .contact-info i { color: #e4b95b; margin-right: 5px; }
+
+        form input, form textarea {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 15px;
+            border: none;
+            background-color: #f0f0f0;
+            border-radius: 5px;
+            font-family: inherit;
+        }
+        form textarea { height: 120px; resize: none; }
+        form button.btn { background-color: #e4b95b; color: white; width: 100%; }
+
+        /* --- Footer --- */
+        footer {
+            background: #111;
+            color: #888;
+            text-align: center;
+            padding: 20px;
+            font-size: 0.8rem;
+        }
+
+        /* --- Global Responsive --- */
+        @media (max-width: 768px) {
+            .about-wrapper { flex-direction: column; }
+            .about-images { width: 100%; grid-template-rows: 200px; }
+            #navbar ul { display: none; }
+            header { background-position: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <header id="home">
+        <nav id="navbar">
+            <div class="logo">
+                <img src="https://cdn-icons-png.flaticon.com/512/1046/1046784.png" alt="Logo">
+            </div>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#menu">Menu</a></li>
+                <li><a href="#gallery">Gallery</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+        <div class="content">
+            <h1>Welcome to <span class="primary-text-gold"> The Daily Dinner </span></h1>
+            <p>Taste the flavor, feel the happiness</p>
+            <a href="#about" class="btn btn-primary">Book a Table</a>
+        </div>
+    </header>
+
+    <section id="about">
+        <div class="container">
+            <div class="section-header">
+                <h2>The Daily Dinner history</h2>
+                <p>More than 25+ years of experience</p>
+            </div>
+            
+            <div class="about-wrapper">
+                <div class="about-text">
+                    <p>
+                        At The Daily Dinner, we believe that every meal should feel like home. Our restaurant was created with one simple idea in mind: to serve fresh, delicious dishes made with love and high-quality ingredients.
+                    </p>
+                    <p>
+                        Whether you are dining in or ordering from home, we aim to bring comfort, warmth, and great taste to your table every single day.
+                    </p>
+                    <a href="#menu" class="btn btn-dark">CHECK OUR MENU</a>
+                </div>
+
+                <div class="about-images">
+                    <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Restaurant Interior">
+                    <img src="https://images.unsplash.com/photo-1577106263724-2c8e03bfe9cf?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Chefs">
+                    <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Food Close up">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="menu">
+        <div class="container">
+            <div class="title">
+                <h2>Our Special Menu</h2>
+                <p>Order two and get third for free</p>
+            </div>
+    
+            <div class="menu-items">
+                <div class="menu-item">
+                    <img src="https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Greek Salad">
+                    <div>
+                        <h3>Greek Salad <span class="primary-text">$18.00</span></h3>
+                        <p>tomatoes, cucumbers, onions, olives, bell peppers, and feta cheese.</p>
+                    </div>
+                </div>
+    
+                <div class="menu-item">
+                    <img src="https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Fried Chicken">
+                    <div>
+                        <h3>Fried Chicken <span class="primary-text">$20.00</span></h3>
+                        <p>Crispy Chicken with fries.</p>
+                    </div>
+                </div>
+    
+                <div class="menu-item">
+                    <img src="https://images.unsplash.com/photo-1600891964092-4316c288032e?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Capo Steak">
+                    <div>
+                        <h3>Capo Steak <span class="primary-text">$22.00</span></h3>
+                        <p>Grilled steak with capo sauce.</p>
+                    </div>
+                </div>
+    
+                <div class="menu-item">
+                    <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Chicken Pizza">
+                    <div>
+                        <h3>Chicken Pizza <span class="primary-text">$25.00</span></h3>
+                        <p>Chicken, tomatoes, onions, olives and cheese</p>
+                    </div>
+                </div>
+    
+                <div class="menu-item">
+                    <img src="https://images.unsplash.com/photo-1628840042765-356cda07504e?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Pepperoni Pizza">
+                    <div>
+                        <h3>Pepperoni Pizza <span class="primary-text">$25.00</span></h3>
+                        <p>Pepperoni, tomatoes, onions, olives and cheese.</p>
+                    </div>
+                </div>
+    
+                <div class="menu-item">
+                    <img src="https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Grilled Fish">
+                    <div>
+                        <h3>Grilled Fish <span class="primary-text">$27.00</span></h3>
+                        <p>salmon, with extra virgin olive oil.</p>
+                    </div>
+                </div>
+    
+                <div class="menu-item">
+                    <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Grain Bowl">
+                    <div>
+                        <h3>Grain Bowl <span class="primary-text">$25.00</span></h3>
+                        <p>tomatoes, cucumbers, onions, olives, bell peppers and carrot.</p>
+                    </div>
+                </div>
+    
+                <div class="menu-item">
+                    <img src="https://images.unsplash.com/photo-1484723091739-30a097e8f929?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="French Toast">
+                    <div>
+                        <h3>French Toast <span class="primary-text">$20.00</span></h3>
+                        <p>flavors: cinnamon, vanilla.</p>
+                    </div>
+                </div>
+    
+                <div class="menu-item">
+                    <img src="https://images.unsplash.com/photo-1551024601-564d6d674f33?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Donuts">
+                    <div>
+                        <h3>Donuts <span class="primary-text">$15.00</span></h3>
+                        <p>flavors: chocolate, vanilla, caramel, strawberry.</p>
+                    </div>
+                </div>
+    
+                <div class="menu-item">
+                    <img src="https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Pancakes">
+                    <div>
+                        <h3>Pancakes <span class="primary-text">$23.00</span></h3>
+                        <p>flavors: Honey, chocolate, caramel.</p>
+                    </div>
+                </div>
+    
+            </div>
+        </div>
+    </section>
+
+    <section id="gallery">
+        <div class="container">
+            <h2>Our Food Gallery</h2>
+            <div class="gallery-grid">
+                <img src="https://images.unsplash.com/photo-1484723091739-30a097e8f929?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Food 1">
+                <img src="https://images.unsplash.com/photo-1473093295043-cdd812d0e601?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Food 2">
+                <img src="https://images.unsplash.com/photo-1482049016688-2d3e1b311543?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Food 3">
+                <img src="https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Food 4">
+                <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Food 5">
+                <img src="https://images.unsplash.com/photo-1455619452474-d2be8b1e70cd?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Food 6">
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <div class="container contact-container">
+            <div class="contact-info">
+                <h3>ADDRESS</h3>
+                <p><i class="fa-solid fa-location-dot"></i> ISMAILIA - FOX SQUARE</p>
+                
+                <h3>WORKING HOURS</h3>
+                <p>8:00 am to 11:00 pm on Weekdays<br>11:00 am to 1:00 pm on Weekends</p>
+            </div>
+            
+            <form>
+                <input type="text" placeholder="Full Name" required>
+                <input type="email" placeholder="Email Address" required>
+                <input type="text" placeholder="Subject">
+                <textarea placeholder="Message"></textarea>
+                <button type="submit" class="btn">SEND MESSAGE</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 The Daily Dinner. All Rights Reserved.</p>
+    </footer>
+
+</body>
+</html>
